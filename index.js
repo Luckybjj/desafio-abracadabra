@@ -44,21 +44,21 @@ app.use("/assets", express.static(path.join(__dirname, "assets")));
 */
 
 // Middleware con ruta "/abracadabra/juego/:usuario" para validar que el usuario recibido como parametro "usuario"
-// existe en el arreglo de nombres creado en el servidor.
-app.use('/abracadabra/juego/:nombre', (req, res, next) => {
-  const { nombre } = req.params;
-  console.log('nombre', nombre);
+// existe en el arreglo de usuarios creado en el servidor.
+app.use('/abracadabra/juego/:usuario', (req, res, next) => {
+  const { usuario } = req.params;
+  console.log('usuario', usuario);
 
   const users = JSON.parse(fs.readFileSync('./usuarios.json', 'utf-8'));
-  const lista = users.usuarios.filter((u) => u == nombre);
+  const lista = users.usuarios.filter((u) => u == usuario);
 
   console.log('users', users);
   console.log('lista', lista);
 
-  nombre == lista ? next() : res.redirect('/who.jpeg');
+  usuario == lista ? next() : res.redirect('/who.jpeg');
 });
 
-app.get('/abracadabra/juego/:nombre', (req, res, next) => {
+app.get('/abracadabra/juego/:usuario', (req, res, next) => {
   res.sendFile(__dirname + '/index.html');
 });
 
